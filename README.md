@@ -5,7 +5,7 @@ The FANS research project tries to identify [latent variables](http://en.wikiped
 
 ##Demo
 
-[**This IPython notebook**](http://nbviewer.ipython.org/urls/raw2.github.com/TheChymera/FANS/master/FANS.ipynb?create=1) - which is also included in the repository as ```fa.ipynb``` - guides you through the suite's functionality and gives basic instructions, as well as a walk-through to current experimental results.
+[**This IPython notebook**](http://nbviewer.ipython.org/github/TheChymera/FANS/blob/master/FANS.ipynb) - which is also included in the repository as ```fa.ipynb``` - guides you through the suite's functionality and gives basic instructions, as well as a walk-through to current experimental results.
 
 ##Dependencies:
 
