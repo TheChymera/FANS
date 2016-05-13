@@ -4,29 +4,32 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.decomposition import PCA, FastICA
+from copy import deepcopy
+from sklearn.decomposition import PCA, FastICA, FactorAnalysis
 
 ###############################################################################
-rng = np.random.RandomState(42)
-S = rng.standard_t(1.5, size=(20000, 2))
-A = np.array([[1, 0.2], [0.2, 1]])  # Mixing matrix
-X = np.dot(S, A.T)  # Generate observations
+# rng = np.random.RandomState(42)
+# S = rng.standard_t(1.5, size=(20000, 2))
+# A = np.array([[1, 0.2], [0.2, 1]])  # Mixing matrix
+# X = np.dot(S, A.T)  # Generate observations
 
-# x = np.random.randn(5000)
-# y = x+np.random.randn(5000)
-# y[::2] = y[::2]*1.7
-# x[::2] = x[::2]/1.7
-# y[1::2] = y[1::2]/1.7
-# x[1::2] = x[1::2]*1.7
-#
-# X=np.stack((x,y)).T
-# S=X
+rng = np.random.RandomState(42)
+S = rng.normal(scale=0.01,size=(10000, 2))
+S[:,1][::2] *= 1.7
+S[:,0][::2] /= 1.7
+S[:,1][1::2] /= 1.7
+S[:,0][1::2] *= 1.7
+X=deepcopy(S)
+X[:,1] = X[:,0]/-2+X[:,1]
 
 pca = PCA()
-S_pca_ = pca.fit(X).transform(X)
+S_pca_ = pca.fit_transform(X)
 
-ica = FastICA()
-S_ica_ = ica.fit(X).transform(X)  # Estimate the sources
+fa = FactorAnalysis(svd_method="lapack")
+S_fa_ = fa.fit_transform(X)
+
+ica = FastICA(max_iter=20000, tol=0.00001)
+S_ica_ = ica.fit_transform(X)  # Estimate the sources
 
 
 ###############################################################################
@@ -57,16 +60,19 @@ plt.subplot(2, 2, 1)
 plot_samples(S / S.std())
 plt.title('True Independent Sources')
 
-axis_list = [pca.components_.T, ica.mixing_]
+axis_list = [fa.components_.T, ica.mixing_]
 plt.subplot(2, 2, 2)
 plot_samples(X / np.std(X), axis_list=axis_list)
-legend = plt.legend(['PCA', 'ICA'], loc='upper right')
+legend = plt.legend(['FA', 'ICA'], loc='upper right')
 legend.set_zorder(100)
-
 plt.title('Observations')
 
 plt.subplot(2, 2, 3)
-plot_samples(S_pca_ / np.std(S_pca_, axis=0))
+plot_samples(S_pca_ / np.std(S_pca_))
+plt.title('PCA recovered signals')
+
+plt.subplot(2, 2, 3)
+plot_samples(S_fa_ / np.std(S_fa_))
 plt.title('PCA recovered signals')
 
 plt.subplot(2, 2, 4)
