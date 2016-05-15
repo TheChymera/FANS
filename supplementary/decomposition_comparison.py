@@ -10,6 +10,7 @@ from sklearn.decomposition import PCA, FastICA, FactorAnalysis
 # create data
 rng = np.random.RandomState(42)
 S = rng.normal(scale=0.01,size=(10000, 2))
+S[0] = S[1]+S[0]/10
 S[:,1][::2] *= 1.7
 S[:,0][::2] /= 1.7
 S[:,1][1::2] /= 1.7
