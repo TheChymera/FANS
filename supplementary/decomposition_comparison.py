@@ -9,14 +9,19 @@ from sklearn.decomposition import PCA, FastICA, FactorAnalysis
 
 # create data
 rng = np.random.RandomState(42)
-S = rng.normal(scale=0.01,size=(10000, 2))
-S[:,0] = S[:,1]+S[:,0]/3
-S[:,1][::2] *= 1.7
-S[:,0][::2] /= 1.7
-S[:,1][1::2] /= 1.7
-S[:,0][1::2] *= 1.7
-X=deepcopy(S)
-X[:,1] = X[:,0]/-2+X[:,1]
+s = rng.normal(scale=0.01,size=(10000, 4))
+S = np.ones((10000,2))
+S[:,1] = s[:,0]+s[:,2]
+S[:,0] = s[:,0]
+# S[:,0] = -s[:,1]/2+s[:,0]/2
+# S[:,1] = s[:,1]/2-s[:,0]/2
+# S[:,1][::2] *= 1.7
+# S[:,0][::2] /= 1.7
+# S[:,1][1::2] /= 1.7ax = fig.add_subplot(111, projection='3d')
+# S[:,0][1::2] *= 1.7
+X = np.ones((10000,2))
+X[:,1] = S[:,0]*2+S[:,1]
+X[:,0] = S[:,0]+S[:,1]*3
 
 # run analysis
 pca = PCA()
@@ -44,8 +49,8 @@ def plot_samples(S, axis_list=None):
 	plt.vlines(0, -3, 3)
 	plt.xlim(-3, 3)
 	plt.ylim(-3, 3)
-	plt.xlabel('x')
 	plt.ylabel('y')
+	plt.xlabel('x')
 
 axis_list = [pca.components_.T, fa.components_.T, ica.mixing_]
 plt.subplot(2, 2, 1)
