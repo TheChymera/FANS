@@ -1,13 +1,13 @@
-#FANS
+# FANS
 
 FANS (Factor Analysis of Nonstandard Sexuality) is a script suite for analysing questionnaire results for the eponymous research project.
 The FANS research project tries to identify [latent variables](http://en.wikipedia.org/wiki/Latent_variable) in questionnaires dealing with sexual practices.   
 
-##Demo
+## Demo
 
 [**This IPython notebook**](http://nbviewer.ipython.org/github/TheChymera/FANS/blob/master/FANS.ipynb) - which is also included in the repository as ```FANS.ipynb``` - guides you through the suite's functionality and gives basic instructions, as well as a walk-through to current experimental results.
 
-##Dependencies:
+## Dependencies:
 
 * **[NumPy](https://en.wikipedia.org/wiki/Numpy)** - in [Portage](http://en.wikipedia.org/wiki/Portage_(software)) as **dev-python/numpy**
 * **[matplotlib](https://en.wikipedia.org/wiki/Matplotlib)** - in Portage as **dev-python/matplotlib**
